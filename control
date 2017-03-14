@@ -1,0 +1,20 @@
+Source: julia
+Section: science
+Priority: extra
+Homepage: http://julialang.org
+Maintainer: Julia Computing Inc <juliapro@juliacomputing.com>
+
+Package: julia
+Architecture: any
+Depends: ${shlibs:Depends}, libllvm3.9, libopenblas-base | libatlas3-base, libfftw3-dev, libgmp3-dev, libmpfr4, libarpack2, libopenspecfun0, libssh2-1, libcurl4-openssl-dev, libsuitesparse-dev
+Description: high-performance programming language for numerical computing
+ Julia is a high-level, high-performance dynamic programming language for
+ numerical computing. It provides a sophisticated compiler, distributed
+ parallel execution, numerical accuracy, and an extensive mathematical function
+ library. The library, mostly written in Julia itself, also integrates mature,
+ best-of-breed C and Fortran libraries for linear algebra, random number
+ generation, FFTs, and string processing. The Julia community has contributed
+ over 1,000 packages covering a number of capabilities.
+ .
+ This package contains the Julia compiler, standard library, package manage
+ and documentation.
