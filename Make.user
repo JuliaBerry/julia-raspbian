@@ -1,9 +1,11 @@
 override USE_SYSTEM_LLVM:=1
 override LLVM_CONFIG:=llvm-config-3.9
+
 override USE_SYSTEM_BLAS=1
-override LIBBLAS:=-lopenblas
-override LIBBLASNAME:=libopenblas
+override LIBBLAS:=-lblas
+override LIBBLASNAME:=libblas
 override OPENBLAS_USE_THREADS:=0
+
 override USE_SYSTEM_LAPACK=1
 override USE_SYSTEM_LIBM=1
 override USE_SYSTEM_FFTW=1
@@ -14,4 +16,5 @@ override USE_SYSTEM_OPENSPECFUN:=1
 override USE_SYSTEM_LIBSSH2:=1
 override USE_SYSTEM_CURL:=1
 override USE_SYSTEM_SUITESPARSE:=1
+
 override JULIA_THREADS:=0
