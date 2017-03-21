@@ -10,7 +10,7 @@ export OPENBLAS_NUM_THREADS=1
 
 cp Make.user julia
 
-cd julia && make -j1 binary-dist
+cd julia && make -j2 binary-dist
 
 
 rm -fr julia-$JULIA_VER julia_* && \
