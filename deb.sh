@@ -1,12 +1,12 @@
  #!/bin/sh
 
-JULIA_VER=0.5.1
+JULIA_VER=0.6.0-rc2
 EMAIL=juliapro@juliacomputing.com
 
-wget https://github.com/JuliaLang/julia/releases/download/v$JULIA_VER/julia-$JULIA_VER.tar.gz
-mkdir julia
-tar -zxvf julia-0.5.1.tar.gz -C julia --strip-components=1
-export OPENBLAS_NUM_THREADS=1
+wget -c https://github.com/JuliaLang/julia/releases/download/v$JULIA_VER/julia-$JULIA_VER.tar.gz
+mkdir -p julia/lib/julia
+tar -zxvf julia-$JULIA_VER.tar.gz -C julia --strip-components=1
+gcc -shared /usr/lib/arm-linux-gnueabihf/libsuitesparseconfig.a -o julia/lib/julia/libsuitesparseconfig.so
 
 cp Make.user julia
 
@@ -22,7 +22,6 @@ rm -fr julia-$JULIA_VER julia_* && \
     rm -f bin/*-debug* lib/*-debug* lib/julia/*-debug* && \
     rm -fr libexec && \
     rm -f lib/julia/libccalltest* && \
-    gcc -shared /usr/lib/arm-linux-gnueabihf/libsuitesparseconfig.a -o lib/julia/libsuitesparseconfig.so && \
     mkdir usr && \
     mv bin include lib share usr && \
     tar  cvf ../julia-$JULIA_VER.tar * && \
@@ -32,4 +31,3 @@ rm -fr julia-$JULIA_VER julia_* && \
     cp -f ../control julia-$JULIA_VER/debian && \
     cd julia-$JULIA_VER && \
     debuild --no-lintian
-
