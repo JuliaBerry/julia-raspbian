@@ -1,6 +1,6 @@
  #!/bin/sh
 
-JULIA_VER=0.6.0-rc2
+JULIA_VER=0.6.0
 EMAIL=juliapro@juliacomputing.com
 
 wget -c https://github.com/JuliaLang/julia/releases/download/v$JULIA_VER/julia-$JULIA_VER.tar.gz
