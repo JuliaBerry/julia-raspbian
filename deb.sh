@@ -10,7 +10,7 @@ gcc -shared /usr/lib/arm-linux-gnueabihf/libsuitesparseconfig.a -o julia/lib/jul
 
 cp Make.user julia
 
-cd julia && make -j2 binary-dist
+cd julia && make -j1 binary-dist
 
 
 rm -fr julia-$JULIA_VER julia_* && \
