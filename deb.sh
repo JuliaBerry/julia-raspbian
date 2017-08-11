@@ -6,7 +6,6 @@ EMAIL=juliapro@juliacomputing.com
 wget -c https://github.com/JuliaLang/julia/releases/download/v$JULIA_VER/julia-$JULIA_VER.tar.gz
 mkdir -p julia/lib/julia
 tar -zxvf julia-$JULIA_VER.tar.gz -C julia --strip-components=1
-gcc -shared /usr/lib/arm-linux-gnueabihf/libsuitesparseconfig.a -o julia/lib/julia/libsuitesparseconfig.so
 
 cp Make.user julia
 
