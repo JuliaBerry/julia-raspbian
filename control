@@ -6,7 +6,7 @@ Maintainer: Julia Computing Inc <juliapro@juliacomputing.com>
 
 Package: julia
 Architecture: any
-Depends: ${shlibs:Depends}, libllvm3.9, libunwind-dev, libpcre2-dev, libdsfmt-dev, libopenblas-dev, libfftw3-dev, libgmp-dev, libmpfr-dev, libarpack2-dev, libsuitesparse-dev, libopenspecfun0, libssh2-1, libcurl4-gnutls-dev, libgit2-dev, patchelf
+Depends: ${shlibs:Depends}, libllvm3.9, libunwind-dev, libpcre2-dev, libdsfmt-dev, libopenblas-dev, libfftw3-dev, libgmp-dev, libmpfr-dev, libarpack2-dev, libsuitesparse-dev, libopenspecfun-dev, libssh2-1, libcurl4-openssl-dev, patchelf
 Description: high-performance programming language for numerical computing
  Julia is a high-level, high-performance dynamic programming language for
  numerical computing. It provides a sophisticated compiler, distributed

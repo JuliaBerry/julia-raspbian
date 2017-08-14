@@ -1,4 +1,4 @@
- #!/bin/sh
+#!/bin/sh
 
 JULIA_VER=0.6.0
 EMAIL=juliapro@juliacomputing.com
