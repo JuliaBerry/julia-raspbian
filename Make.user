@@ -6,7 +6,7 @@ override LIBBLAS:=-lopenblas
 override LIBBLASNAME:=libopenblas
 
 override USE_SYSTEM_PCRE:=1
-override USE_SYSTEM_LIBUNWIND:=1
+#override USE_SYSTEM_LIBUNWIND:=1
 override USE_SYSTEM_DSFMT=1
 override USE_SYSTEM_LAPACK=1
 override USE_SYSTEM_LIBM=1
