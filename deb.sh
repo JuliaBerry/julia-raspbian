@@ -3,15 +3,14 @@
 JULIA_VER=0.6.0
 EMAIL=juliapro@juliacomputing.com
 
-wget -c https://github.com/JuliaLang/julia/releases/download/v$JULIA_VER/julia-$JULIA_VER.tar.gz
-mkdir -p julia/lib/julia
-tar -zxvf julia-$JULIA_VER.tar.gz -C julia --strip-components=1
-
-cp Make.user julia
+if [ ! -f julia/julia-$JULIA_VER-Linux-arm.tar.gz ]; then
+    wget -c https://github.com/JuliaLang/julia/releases/download/v$JULIA_VER/julia-$JULIA_VER.tar.gz && \
+    mkdir -p julia/lib/julia && \
+    tar -zxvf julia-$JULIA_VER.tar.gz -C julia --strip-components=1 && \
+    cp -f Make.user julia
+fi
 
 cd julia && make -j1 binary-dist
-
-
 rm -fr julia-$JULIA_VER julia_* && \
     tar zxf julia-$JULIA_VER-Linux-arm.tar.gz && \
     cd julia-$JULIA_VER && \
