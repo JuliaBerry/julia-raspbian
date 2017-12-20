@@ -18,7 +18,7 @@ source/julia-$(JULIA_VER).tar.gz :
 build/Make.user : source/julia-$(JULIA_VER).tar.gz
 	rm -fr build
 	mkdir build
-	tar -zxvf julia-$(JULIA_VER).tar.gz -C build --strip-components=1
+	tar -zxvf $< -C build --strip-components=1
 	cp -f Make.user build
 
 # 3. build Julia binary-dist
