@@ -3,31 +3,19 @@ EMAIL:=juliapro@juliacomputing.com
 
 .PHONY: clean all install-deps
 
-all: julia-$(JULIA_VER).tar
-	rm -fr julia-$(JULIA_VER)
-	fakeroot alien -d --generate julia-$(JULIA_VER).tar
-	cp -f ../control julia-$(JULIA_VER)/debian/
-	cd julia-$(JULIA_VER)
-	debuild --no-lintian
-
-clean-build:
-	rm -rf build
-
-clean-repack:
-	rm -rf repack
-clean:
-	rm -fr build repack julia-*.tar julia-$(JULIA_VER)
+all: julia-$(JULIA_VER).deb
 
 # install necessary dependencies
 install-deps:
 	sudo apt-get install llvm-3.9-dev libpcre2-dev libdsfmt-dev libopenblas-dev libfftw3-dev libgmp3-dev libmpfr-dev libarpack2-dev libopenspecfun-dev libsuitesparse-dev libssh2-1-dev libcurl4-openssl-dev libssl-dev zlib1g-dev devscripts alien build-essential m4 gfortran cmake patchelf
 
 # 1. download source
-julia-$(JULIA_VER).tar.gz :
-	wget -c https://github.com/JuliaLang/julia/releases/download/v$(JULIA_VER)/$@
+source/julia-$(JULIA_VER).tar.gz :
+	mkdir -p source
+	wget -c -P source https://github.com/JuliaLang/julia/releases/download/v$(JULIA_VER)/$@
 
 # 2. setup build dir
-build/Make.user : julia-$(JULIA_VER).tar.gz
+build/Make.user : source/julia-$(JULIA_VER).tar.gz
 	rm -fr build
 	mkdir build
 	tar -zxvf julia-$(JULIA_VER).tar.gz -C build --strip-components=1
@@ -38,7 +26,7 @@ build/julia-$(JULIA_VER)-Linux-arm.tar.gz : build/Make.user
 	$(MAKE) -C build -j1 binary-dist
 
 # 4. repack into debian structure, removing unnecessary files
-julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
+repack/julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 	rm -fr repack
 	mkdir repack
 	tar zxf $< -C repack --strip-components=1
@@ -53,3 +41,15 @@ julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 	tar cvf $@ repack/*
 
 # 4. build .deb
+julia-$(JULIA_VER).deb: repack/julia-$(JULIA_VER).tar
+	rm -fr julia-$(JULIA_VER)
+	fakeroot alien -d --generate $<
+	cp -f ../control julia-$(JULIA_VER)/debian/
+	cd julia-$(JULIA_VER)
+	debuild --no-lintian
+
+clean-build:
+	rm -rf build
+clean-repack:
+	rm -rf repack
+clean: clean-build clean-repack
