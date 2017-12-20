@@ -21,12 +21,14 @@ julia-$(JULIA_VER).tar.gz :
 
 build/julia-$(JULIA_VER)-Linux-arm.tar.gz : julia-$(JULIA_VER).tar.gz
 	rm -fr build
+	mkdir build
 	tar -zxvf julia-$(JULIA_VER).tar.gz -C build --strip-components=1
 	cp -f Make.user build
 	$(MAKE) -C build -j1 binary-dist
 
 julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 	rm -fr repack
+	mkdir repack
 	tar zxf $< -C repack --strip-components=1
 	mv repack/LICENSE.md repack/share/doc/julia/LICENSE.md
 	rm -f repacklib/julia/libpcre2-posix.so*
