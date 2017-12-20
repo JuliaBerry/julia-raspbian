@@ -44,9 +44,8 @@ repack/julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 julia-$(JULIA_VER).deb: repack/julia-$(JULIA_VER).tar
 	rm -fr julia-$(JULIA_VER)
 	fakeroot alien -d --generate $<
-	cp -f ../control julia-$(JULIA_VER)/debian/
-	cd julia-$(JULIA_VER)
-	debuild --no-lintian
+	cp -f control julia-$(JULIA_VER)/debian/
+	cd julia-$(JULIA_VER) && debuild --no-lintian
 
 clean-build:
 	rm -rf build
