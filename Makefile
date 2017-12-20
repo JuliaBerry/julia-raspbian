@@ -1,13 +1,16 @@
 JULIA_VER:=0.6.2
 EMAIL:=juliapro@juliacomputing.com
 
-.PHONY: clean all
+.PHONY: clean all install-deps
 
 all: julia-$JULIA_VER.tar
 	fakeroot alien -d --generate julia-$JULIA_VER.tar
 	cp -f ../control julia-$JULIA_VER/debian
 	cd julia-$JULIA_VER
 	debuild --no-lintian
+
+install-deps:
+	sudo apt-get install llvm-3.9-dev libpcre2-dev libdsfmt-dev libopenblas-dev libfftw3-dev libgmp3-dev libmpfr-dev libarpack2-dev libopenspecfun-dev libssh2-1-dev libcurl4-openssl-dev libssl-dev zlib1g-dev devscripts alien build-essential m4 gfortran cmake patchelf
 
 
 julia/julia-$JULIA_VER-Linux-arm.tar.gz :
