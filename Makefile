@@ -40,7 +40,7 @@ repack/julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 	mv repack/bin repack/include repack/lib repack/usr/
 	tar cvf $@ repack/*
 
-# 4. build .deb
+# 5. build .deb
 julia-$(JULIA_VER).deb: repack/julia-$(JULIA_VER).tar
 	rm -fr julia-$(JULIA_VER)
 	fakeroot alien -d --generate $<
