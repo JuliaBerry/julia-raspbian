@@ -25,30 +25,21 @@ build/Make.user : source/julia-$(JULIA_VER).tar.gz
 build/julia-$(JULIA_VER)-Linux-arm.tar.gz : build/Make.user
 	$(MAKE) -C build -j1 binary-dist
 
-# 4. repack into debian structure, removing unnecessary files
-repack/julia-$(JULIA_VER).tar : build/julia-$(JULIA_VER)-Linux-arm.tar.gz
-	rm -fr repack
-	mkdir repack
-	tar zxf $< -C repack --strip-components=1
-	mv repack/LICENSE.md repack/share/doc/julia/
-	rm -f repacklib/julia/libpcre2-posix.so*
-	rm -f repack/lib/julia/libstdc++.so*
-	rm -f repack/bin/*-debug* lib/*-debug* lib/julia/*-debug*
-	rm -fr repack/libexec
-	rm -f repack/lib/julia/libccalltest*
-	mkdir repack/usr
-	mv repack/bin repack/include repack/lib repack/usr/
-	tar cvf $@ repack/*
+# 4. generate debian package structure
+julia-$(JULIA_VER) :  build/julia-$(JULIA_VER)-Linux-arm.tar.gz
+	fakeroot alien -d --generate $<
+	mv $@/julia-$(JULIA_VER) $@/usr
+	mv $@/usr/LICENSE.md $@/usr/share/doc/julia/
+	rm -f $@/usr/lib/julia/libstdc++.so*
+	rm -f $@/usr/bin/*-debug* lib/*-debug* lib/julia/*-debug*
+	rm -f $@/usr/lib/julia/libccalltest*
+	cp -f control $@/debian/
+
 
 # 5. build .deb
-julia-$(JULIA_VER).deb: repack/julia-$(JULIA_VER).tar
-	rm -fr julia-$(JULIA_VER)
-	fakeroot alien -d --generate $<
-	cp -f control julia-$(JULIA_VER)/debian/
-	cd julia-$(JULIA_VER) && debuild --no-lintian
+julia-$(JULIA_VER).deb: julia-$(JULIA_VER)
+	cd julia-$(JULIA_VER) && debuild
 
 clean-build:
 	rm -rf build
-clean-repack:
-	rm -rf repack
 clean: clean-build clean-repack
