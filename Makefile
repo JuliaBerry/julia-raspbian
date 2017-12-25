@@ -12,7 +12,7 @@ install-deps:
 # 1. download source
 source/julia-$(JULIA_VER).tar.gz :
 	mkdir -p source
-	wget -c -P source https://github.com/JuliaLang/julia/releases/download/v$(JULIA_VER)/$@
+	wget -c -P source https://github.com/JuliaLang/julia/releases/download/v$(JULIA_VER)/julia-$(JULIA_VER).tar.gz
 
 # 2. setup build dir
 build/Make.user : source/julia-$(JULIA_VER).tar.gz
@@ -35,10 +35,9 @@ julia-$(JULIA_VER) :  build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 	rm -f $@/usr/lib/julia/libccalltest*
 	cp -f control $@/debian/
 
-
 # 5. build .deb
 julia-$(JULIA_VER).deb: julia-$(JULIA_VER)
-	cd julia-$(JULIA_VER) && debuild
+	cd julia-$(JULIA_VER) && debuild --no-sign
 
 clean-build:
 	rm -rf build
