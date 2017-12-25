@@ -37,7 +37,7 @@ julia-$(JULIA_VER) :  build/julia-$(JULIA_VER)-Linux-arm.tar.gz
 
 # 5. build .deb
 julia-$(JULIA_VER).deb: julia-$(JULIA_VER)
-	cd julia-$(JULIA_VER) && debuild --no-sign --no-lintian
+	cd julia-$(JULIA_VER) && debuild --no-lintian --no-sign
 
 clean-build:
 	rm -rf build
