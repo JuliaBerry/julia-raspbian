@@ -1,6 +1,6 @@
 #!/bin/sh
 
-JULIA_VER=0.6.0
+JULIA_VER=1.0.0
 EMAIL=juliapro@juliacomputing.com
 
 if [ ! -f julia/julia-$JULIA_VER-Linux-arm.tar.gz ]; then
